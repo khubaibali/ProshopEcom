@@ -1,25 +1,3 @@
-
-import React, { useState, useEffect } from "react";
-
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { ListGroup, Row, Col, Image, Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import Rating from "../components/Rating";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { listProductDetails } from "../actions/productActions";
-
-const ProductScreen = ({ match }) => {
-  const dispatch = useDispatch();
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
-
-  useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
-  }, [match]);
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -51,7 +29,6 @@ const ProductScreen = ({ match, history }) => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
 
-
   return (
     <>
       <Link to="/" className="btn btn-light my-3">
@@ -82,11 +59,6 @@ const ProductScreen = ({ match, history }) => {
                 Description: {product.description}
               </ListGroup.Item>
             </ListGroup>
-
-          </Card>
-        </Col>
-      </Row>
-
           </Col>
           <Col md={3}>
             <Card>
