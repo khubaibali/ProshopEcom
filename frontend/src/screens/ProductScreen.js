@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from "react";
 import { ListGroup, Row, Col, Image, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -14,6 +15,38 @@ const ProductScreen = ({ match }) => {
 
     fetchProduct();
   }, [match]);
+=======
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ListGroup,
+  Row,
+  Col,
+  Image,
+  Card,
+  Button,
+  Form,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
+import Rating from "../components/Rating";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import { listProductDetails } from "../actions/productActions";
+
+const ProductScreen = ({ match, history }) => {
+  const [qty, setQty] = useState(1);
+  const dispatch = useDispatch();
+  const productDetails = useSelector((state) => state.productDetails);
+  const { loading, error, product } = productDetails;
+
+  useEffect(() => {
+    dispatch(listProductDetails(match.params.id));
+  }, [match, dispatch]);
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
+>>>>>>> Stashed changes
 
   return (
     <>
@@ -68,9 +101,68 @@ const ProductScreen = ({ match }) => {
                 </Button>
               </ListGroup.Item>
             </ListGroup>
+<<<<<<< Updated upstream
           </Card>
         </Col>
       </Row>
+=======
+          </Col>
+          <Col md={3}>
+            <Card>
+              <ListGroup>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Price:</Col>
+                    <Col>
+                      <strong>{product.price}</strong>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Status:</Col>
+                    <Col>
+                      {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col>
+                        <Form.Control
+                          as="select"
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
+
+                <ListGroup.Item>
+                  <Button
+                    className="btn-block"
+                    type="button"
+                    disabled={product.countInStock === 0}
+                    onClick={addToCartHandler}
+                  >
+                    Add to Cart
+                  </Button>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+      )}
+>>>>>>> Stashed changes
     </>
   );
 };
