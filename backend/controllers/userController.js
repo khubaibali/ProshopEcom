@@ -85,7 +85,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @access private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  console.log(user);
+  console.log('from backend',user);
   if (user) {
     res.json({
       _id: user._id,
